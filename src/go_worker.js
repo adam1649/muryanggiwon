@@ -11,6 +11,7 @@ onmessage = e => {
       postMessage({ id: d.id, score: finalScore(b, own, d.komi ?? KOMI) });
       return;
     }
+    if (d.type === "eval") { const r = think(b, 2, d.komi ?? KOMI, d.ms || 700); const wr = typeof r.wr === "number" ? r.wr : .5; postMessage({ id: d.id, black: b.turn === 1 ? wr : 1 - wr }); return; }
     const r = think(b, d.level | 0, d.komi ?? KOMI);
     const mv = r.move === "resign" ? "resign" : r.move === PASS ? null : b.xy(r.move);
     postMessage({ id: d.id, move: mv, wr: r.wr, iters: r.iters || 0 });

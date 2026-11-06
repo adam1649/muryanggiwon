@@ -509,3 +509,41 @@ body.giwon #scene-loading{background:radial-gradient(120% 90% at 50% 0%,#2c3438 
 .gp-start:hover{background:#e6c47e!important}
 .gp-leave{color:#f1ece0;border-color:rgba(230,210,170,.45)}
 @media(min-width:761px) and (pointer:fine){.gp-board{width:min(100%,calc(100vh - 360px));margin:0 auto}}
+/* ===================== 무량기원 v2 ===================== */
+@media(min-width:761px){.go-panel{left:50%;right:auto;transform:translateX(-50%);width:min(560px,calc(100vw - 720px),92vw);min-width:420px;top:76px;bottom:70px}}
+@media(min-width:761px) and (max-width:1180px){.go-panel{width:min(520px,92vw)}}
+.gp-wr{display:flex;align-items:center;gap:8px;font-size:11px;color:#cfc8b8}
+.gp-wr i{flex:1;height:10px;border-radius:6px;background:#f2f0ea;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(0,0,0,.3)}
+.gp-wr b{display:block;height:100%;background:#151515;transition:width .6s ease}
+.kb-tabs{margin-bottom:8px}
+.kb-list{display:flex;flex-direction:column;gap:6px;overflow:auto;max-height:calc(100vh - 300px)}
+.kb-item{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:10px 12px;border-radius:10px;border:1px solid rgba(230,210,170,.22);background:rgba(255,255,255,.05);color:#efe9da;cursor:pointer;font:inherit}
+.kb-item:hover{background:rgba(255,255,255,.11)}
+.kb-item b{font-size:13px}.kb-item span{font-size:12px;color:#d9d1bf}.kb-item small{font-size:11px;color:#a9a397}
+.ls-item{flex-direction:row;align-items:center;gap:8px}.ls-item span{flex:1;font-size:13px;color:#efe9da}.ls-item.done small{color:#9fd18a}
+.kb-info b{display:block;font:600 14px 'Noto Serif KR',serif}.kb-info small{display:block;margin-top:4px;font-size:11.5px;line-height:1.5;color:#b9b2a2}
+.kb-slider{width:100%;accent-color:#d9b56c}
+.ls-text{margin:2px 0;white-space:pre-line;font-size:13px;line-height:1.6;color:#e9e2cf}
+.ls-head{display:flex;justify-content:space-between;align-items:baseline}.ls-head b{font:600 15px 'Noto Serif KR',serif}.ls-head small{color:#a9a397}
+.gp-actions .solid-button{min-height:36px;padding:7px 14px;font-size:12px;border-radius:999px}
+.gp-actions .on{background:#d9b56c;color:#1d1f21;border-color:#d9b56c}
+.npc-card{position:absolute;z-index:17;left:50%;bottom:86px;transform:translateX(-50%);width:min(520px,calc(100% - 24px));max-height:calc(100% - 180px);overflow:auto;padding:14px 16px;border-radius:16px;background:rgba(22,26,28,.95);border:1px solid rgba(201,165,95,.45);color:#f1ece0;box-shadow:0 18px 50px rgba(0,0,0,.45);animation:card-in .25s ease}
+.npc-card[hidden]{display:none}
+.npc-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.npc-head b{display:block;font:600 16px 'Noto Serif KR',serif}.npc-head small{display:block;font-size:11px;color:#c9a55f;letter-spacing:.06em;margin-top:2px}
+.npc-text{min-height:42px;margin:8px 0 10px;font-size:13.5px;line-height:1.6;color:#efe7d2}
+.npc-opts{display:flex;flex-wrap:wrap;gap:6px}.npc-opts .outline-button,.npc-opts .solid-button{min-height:38px;padding:8px 13px;font-size:12.5px;border-radius:999px;color:#f1ece0;border-color:rgba(230,210,170,.45);background:rgba(255,255,255,.05)}
+.npc-form{margin:6px 0 10px}.npc-form .field-row span{color:#c9b89a}.npc-form input,.npc-form select{width:100%;min-height:38px;border-radius:8px;border:1px solid rgba(230,210,170,.35);background:rgba(255,255,255,.07);color:#f1ece0;padding:6px 10px;font:inherit}
+.npc-form select option{color:#222}.npc-form .check-row{color:#e6dcc4;font-size:12.5px;margin:6px 0}
+.mcard{margin:4px auto;max-width:330px;padding:16px 18px;border-radius:14px;background:linear-gradient(135deg,#23292e,#2f3740 60%,#3a3226);border:1px solid #c9a55f;box-shadow:0 10px 24px rgba(0,0,0,.4)}
+.mc-top{display:flex;justify-content:space-between;align-items:baseline;color:#d9b56c}.mc-top span{font:700 18px 'Noto Serif KR',serif;letter-spacing:.1em}.mc-top small{font-size:9px;letter-spacing:.3em}
+.mcard>b{display:block;margin:14px 0 10px;font-size:20px;color:#fff6e2}
+.mc-row{display:flex;justify-content:space-between;font-size:12px;color:#b9b2a2;padding:3px 0;border-top:1px solid rgba(255,255,255,.06)}.mc-row em{font-style:normal;color:#efe9da}
+.live-list{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.name-note{margin:4px 0 8px;color:#7a6a50}
+body.go-open .npc-card{display:none}
+@media(max-width:760px),(pointer:coarse){.npc-card{bottom:calc(150px + var(--sa-b,0px))}.kb-list{max-height:52vh}}
+@media(min-width:761px) and (pointer:fine){.kibo-panel .gp-board{width:min(100%,calc(100vh - 470px))}.lesson-panel .gp-board{width:min(100%,calc(100vh - 430px))}}
+.kibo-panel .gp-actions,.lesson-panel .gp-actions{flex-shrink:0}
+@keyframes gp-in{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%)}}
+.npc-card{animation:gp-in .25s ease}
+@media(min-width:761px){.go-panel{animation:gp-in .28s ease}}

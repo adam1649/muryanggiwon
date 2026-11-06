@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
-  <link rel="stylesheet" href="./style.css?v=1">
+  <link rel="stylesheet" href="./style.css?v=2">
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/icon32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="./assets/icon192.png">
   <link rel="apple-touch-icon" href="./assets/icon180.png">
@@ -47,6 +47,8 @@
         <button data-view="hall" class="nav-link" title="단축키 5">중앙 대국장</button>
         <button data-view="lab" class="nav-link" title="단축키 6">연구 · 분석실</button>
         <button data-view="edu" class="nav-link" title="단축키 7">교육원</button>
+        <button data-view="tour" class="nav-link" title="단축키 8">2층 대회실</button>
+        <button data-view="room" class="nav-link" title="단축키 9">2층 대국실</button>
         <a class="nav-link support-link" id="muryangsa-link" href="#" target="_blank" rel="noopener" hidden>무량사 ↗</a>
       </nav>
       <button id="menu-toggle" class="menu-toggle" aria-label="메뉴 열기">MENU ☰</button>
@@ -80,12 +82,21 @@
       <div class="visitor-name" id="visitor-name">방문객 · 고요한 학</div>
       <div class="visitor-actions">
         <button id="main-quick" class="action-button action-primary">♟ 바로 대국하기</button>
+        <button id="elev-button" class="action-button action-primary" hidden>🛗 2층으로 (E)</button>
+        <button id="npc-button" class="action-button action-primary" hidden>💬 대화 (E)</button>
         <button id="sit-button" class="action-button action-primary" hidden>바둑 두기 (E)</button>
+        <button id="coffee-button" class="action-button" hidden>☕ 믹스커피 (Q)</button>
+        <button id="water-button" class="action-button" hidden>💧 물 한 잔 (U)</button>
+        <button id="shelf-button" class="action-button action-primary" hidden>📚 기보 서가 (Q)</button>
+        <button id="drop-button" class="action-button" hidden>📚 기보 내려놓기</button>
+        <button id="learn-button" class="action-button action-primary" hidden>📖 바둑 배우기 (L)</button>
         <button id="board-button" class="action-button action-primary" hidden>바둑판 열기 (B)</button>
         <button id="watch-button" class="action-button" hidden>관전하기 (F)</button>
         <button id="greet-button" class="action-button">인사 (G)</button>
         <button id="warm-button" class="action-button">반가움 (H)</button>
         <button id="talk-button" class="action-button">한마디 (C)</button>
+        <button id="live-button" class="action-button">📺 대국 중계 (J)</button>
+        <button id="kibo-button" class="action-button">📜 내 기보 (I)</button>
         <button id="fp-button" class="action-button">1인칭 (V/F5)</button>
       </div>
       <button id="share-button" class="action-button friend-button">공유하기 · 무량기원 주소 보내기</button>
@@ -93,8 +104,8 @@
     </section>
 
     <section class="bottom-bar">
-      <div class="interaction-hint">좌클릭 이동 · 좌클릭 드래그 시선 · W A S D · Shift 달리기 · V/F5 1인칭 · E 입장·바둑 두기 · F 관전 · 2~7 장소 · / 단축키 전체 보기</div>
-      <div class="bottom-links"><span>手談 · 坐隱 · 無量 · v1</span></div>
+      <div class="interaction-hint">좌클릭 이동 · 좌클릭 드래그 시선 · W A S D · Shift 달리기 · V/F5 1인칭 · E 입장·앉기·대화 · F 관전 · J 중계 · I 내 기보 · 2~9 장소 · / 단축키 전체 보기</div>
+      <div class="bottom-links"><span>手談 · 坐隱 · 無量 · v2</span></div>
     </section>
 
     <div class="joystick" id="joystick" aria-label="이동 조이스틱"><div class="joy-base"></div><div class="joy-knob" id="joy-knob"></div></div>
@@ -136,13 +147,19 @@
       <div class="kh"><span>가까운 대국 관전</span><span class="kk"><kbd>F</kbd></span></div>
       <div class="kh"><span>바둑판 다시 열기 (앉아 있을 때)</span><span class="kk"><kbd>B</kbd></span></div>
       <div class="kh"><span>바둑판 닫기</span><span class="kk"><kbd>Esc</kbd></span></div>
+      <div class="kh"><span>대국 중계 목록</span><span class="kk"><kbd>J</kbd></span></div>
+      <div class="kh"><span>내 기보 보기</span><span class="kk"><kbd>I</kbd></span></div>
+      <div class="kh"><span>바둑 배우기 (교육원)</span><span class="kk"><kbd>L</kbd></span></div>
       <h4>행동</h4>
+      <div class="kh"><span>믹스커피 · 기보 서가 · 내려놓기</span><span class="kk"><kbd>Q</kbd></span></div>
+      <div class="kh"><span>물 한 잔 (다과 코너)</span><span class="kk"><kbd>U</kbd></span></div>
+      <div class="kh"><span>엘리베이터 · 안내원과 대화</span><span class="kk"><kbd>E</kbd></span></div>
       <div class="kh"><span>인사</span><span class="kk"><kbd>G</kbd></span></div>
       <div class="kh"><span>반가움</span><span class="kk"><kbd>H</kbd></span></div>
       <div class="kh"><span>한마디</span><span class="kk"><kbd>C</kbd></span></div>
       <div class="kh"><span>스크린샷</span><span class="kk"><kbd>K</kbd></span></div>
       <h4>안내 · 창</h4>
-      <div class="kh"><span>장소 이동 (정문·야외 대국석·로비·대국장·연구실·교육원)</span><span class="kk"><kbd>2</kbd>~<kbd>7</kbd></span></div>
+      <div class="kh"><span>장소 이동 (정문·야외·로비·대국장·연구실·교육원·대회실·대국실)</span><span class="kk"><kbd>2</kbd>~<kbd>9</kbd></span></div>
       <div class="kh"><span>이 공간 둘러보기</span><span class="kk"><kbd>Enter</kbd></span></div>
       <div class="kh"><span>이 안내 열기 / 닫기</span><span class="kk"><kbd>/</kbd> <kbd>F1</kbd></span></div>
       </div>
@@ -159,14 +176,15 @@
     <dialog id="outfit-dialog" class="ritual-dialog outfit-dialog">
       <div class="dialog-kicker">OUTFIT</div>
       <h2>옷 꾸미기</h2>
-      <div class="of-row"><span>옷 색</span><div class="of-sw" id="of-robe-sw"></div><input type="color" id="of-robe" aria-label="옷 색 직접 고르기"></div>
-      <div class="of-row"><span>허리띠</span><div class="of-sw" id="of-sash-sw"></div><input type="color" id="of-sash" aria-label="허리띠 색 직접 고르기"></div>
-      <div class="of-row"><span>머리</span><div class="of-hats"><button type="button" data-h="1">삿갓</button><button type="button" data-h="2">안경</button><button type="button" data-h="4">리본</button><button type="button" data-h="8">토끼귀</button><button type="button" data-h="16">고깔</button><button type="button" data-h="32">엔젤링</button><button type="button" data-h="64">화관</button><button type="button" data-h="128">고양이귀</button><button type="button" data-h="256">왕관</button><button type="button" data-h="512">이마 점 없음</button><button type="button" data-h="1024">헤드폰</button><button type="button" data-h="2048">에어팟</button></div></div>
-      <div class="of-row"><span>몸통</span><div class="of-hats"><button type="button" data-b="1">목도리</button><button type="button" data-b="2">염주</button><button type="button" data-b="4">가사</button><button type="button" data-b="8">망토</button><button type="button" data-b="16">보따리</button><button type="button" data-b="32">연꽃 장식</button><button type="button" data-b="64">스님 복장</button></div></div>
+      <div class="of-row"><span>옷</span><div class="of-hats"><button type="button" data-t="0">정장</button><button type="button" data-t="1">셔츠</button><button type="button" data-t="2">니트</button><button type="button" data-t="3">후드티</button><button type="button" data-t="4">코트</button></div></div>
+      <div class="of-row"><span>상의 색</span><div class="of-sw" id="of-top-sw"></div><input type="color" id="of-top" aria-label="상의 색"></div>
+      <div class="of-row"><span>하의 색</span><div class="of-sw" id="of-pants-sw"></div><input type="color" id="of-pants" aria-label="하의 색"></div>
+      <div class="of-row"><span>넥타이·포인트</span><div class="of-sw" id="of-acc-sw"></div><input type="color" id="of-acc" aria-label="넥타이·포인트 색"></div>
+      <div class="of-row"><span>머리 모양</span><div class="of-hats"><button type="button" data-hs="0">짧은 머리</button><button type="button" data-hs="1">가르마</button><button type="button" data-hs="2">긴 머리</button><button type="button" data-hs="3">단발</button><button type="button" data-hs="4">포니테일</button><button type="button" data-hs="6">곱슬</button><button type="button" data-hs="7">스포츠</button><button type="button" data-hs="5">민머리</button></div></div>
+      <div class="of-row"><span>머리 색</span><div class="of-sw" id="of-hair-sw"></div><input type="color" id="of-hair" aria-label="머리 색"></div>
+      <div class="of-row"><span>소품</span><div class="of-hats"><button type="button" data-a="1">안경</button><button type="button" data-a="2">선글라스</button><button type="button" data-a="4">야구모자</button><button type="button" data-a="8">비니</button><button type="button" data-a="16">헤드폰</button><button type="button" data-a="32">에어팟</button><button type="button" data-a="64">회원증 목걸이</button></div></div>
       <div class="of-row"><span>눈</span><div class="of-hats"><button type="button" data-e="0">기본</button><button type="button" data-e="2">웃는 눈</button><button type="button" data-e="3">졸린 눈</button><button type="button" data-e="4">점 눈</button><button type="button" data-e="5">또렷한 눈</button><button type="button" data-e="6">감은 눈</button></div></div>
       <div class="of-row"><span>코</span><div class="of-hats"><button type="button" data-n="0">기본</button><button type="button" data-n="1">점 코</button><button type="button" data-n="2">딸기코</button><button type="button" data-n="3">뾰족 코</button><button type="button" data-n="4">코 없음</button></div></div>
-      <div class="of-row" id="of-hatc-row" hidden><span>포인트 색</span><input type="color" id="of-hatc" aria-label="리본·목도리 색"></div>
-      <div class="of-row" id="of-kc-row" hidden><span>가사·망토 색</span><input type="color" id="of-kc" aria-label="가사·망토 색"></div>
       <div class="dialog-actions"><button type="button" id="of-front" class="outline-button">앞모습 보기</button><button type="button" id="of-cancel" class="outline-button">취소</button><button type="button" id="of-save" class="solid-button">저장</button></div>
     </dialog>
     <dialog id="name-dialog" class="ritual-dialog">
@@ -184,6 +202,6 @@
 if(location.protocol==="file:")m("파일을 직접 열면 3D 기원이 실행되지 않습니다. 서버(python -m http.server)나 GitHub Pages로 열어 주세요.");
 setTimeout(function(){if(!window.__muryangReady)m("3D 화면을 불러오지 못했습니다. 인터넷 연결을 확인하고 새로고침해 주세요.")},15000)})();</script>
   <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.166.1/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.166.1/examples/jsm/","trystero":"https://cdn.jsdelivr.net/npm/trystero@0.26.0/+esm"}}</script>
-  <script type="module" src="./src/main.js?v=1"></script>
+  <script type="module" src="./src/main.js?v=2"></script>
 </body>
 </html>
