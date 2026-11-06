@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no,date=no,address=no,email=no">
+  <meta name="theme-color" content="#1c2226">
+  <meta name="description" content="바둑의 깊이는 헤아릴 수 없다. 함께 걷고, 마주 앉아 한 판 두는 가상의 3D 바둑 기관 무량기원입니다.">
+  <title>무량기원 | MURYANG BADUK INSTITUTE</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="./style.css?v=1">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/icon32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="./assets/icon192.png">
+  <link rel="apple-touch-icon" href="./assets/icon180.png">
+  <meta property="og:title" content="무량기원 | MURYANG BADUK INSTITUTE">
+  <meta property="og:description" content="바둑의 깊이는 헤아릴 수 없다 · 無量之棋 無盡之道">
+  <meta property="og:type" content="website">
+</head>
+<body class="giwon">
+  <main id="muryang-root">
+    <div id="scene-loading" role="status" aria-live="polite">
+      <div class="loading-inner">
+        <span class="loading-hanja">無量棋院</span>
+        <span class="loading-rule" aria-hidden="true"></span>
+        <span class="loading-hangul">무량기원</span>
+        <span class="loading-en">MURYANG BADUK INSTITUTE</span>
+        <span class="loading-bar" aria-hidden="true"><i></i></span>
+        <span class="loading-msg" id="loading-msg">무량기원 문을 여는 중입니다</span>
+      </div>
+    </div>
+    <div class="topbar">
+      <a class="brand" href="./index.html" aria-label="무량기원 홈">
+        <span class="brand-title">무량기원</span>
+        <span class="brand-sub">MURYANG BADUK INSTITUTE · 無量棋院</span>
+      </a>
+      <nav class="main-nav" id="main-nav-box" aria-label="주요 메뉴">
+        <button data-view="intro" class="nav-link active">무량기원 소개</button>
+        <button data-view="front" class="nav-link" title="단축키 2">정문 · 광장</button>
+        <button data-view="park" class="nav-link" title="단축키 3">야외 대국석</button>
+        <button data-view="lobby" class="nav-link" title="단축키 4">안내 · 접견실</button>
+        <button data-view="hall" class="nav-link" title="단축키 5">중앙 대국장</button>
+        <button data-view="lab" class="nav-link" title="단축키 6">연구 · 분석실</button>
+        <button data-view="edu" class="nav-link" title="단축키 7">교육원</button>
+        <a class="nav-link support-link" id="muryangsa-link" href="#" target="_blank" rel="noopener" hidden>무량사 ↗</a>
+      </nav>
+      <button id="menu-toggle" class="menu-toggle" aria-label="메뉴 열기">MENU ☰</button>
+    </div>
+
+    <section class="hero-copy" aria-label="무량기원 소개">
+      <div class="hero-kicker">THE DEPTH OF BADUK IS BEYOND MEASURE</div>
+      <h1>무량기원</h1>
+      <div class="hero-hanja">無量棋院 · MURYANG BADUK INSTITUTE</div>
+      <p>바둑의 깊이는 헤아릴 수 없다</p>
+      <p class="hero-motto">無量之棋 · 無盡之道</p>
+      <button id="enter-world" class="enter-button">기원 둘러보기 <span>↗</span></button> <button id="enter-main" class="enter-button">바로 대국하기 <span>↗</span></button>
+      <p class="hero-tip" id="hero-tip"></p>
+    </section>
+
+    <section class="space-card" id="space-card" aria-live="polite">
+      <div class="card-eyebrow">MURYANG BADUK INSTITUTE · SPACE GUIDE</div>
+      <button class="card-close" id="card-close" aria-label="안내 닫기">×</button>
+      <h2 id="card-title">무량기원</h2>
+      <p id="card-description">전문성과 전통이 함께하는 가상의 바둑 기관입니다.</p>
+      <button id="card-focus" class="outline-button">이 공간 둘러보기</button>
+    </section>
+
+    <section class="visitor-panel" aria-label="방문객 상호작용">
+      <div class="visitor-head">
+        <span class="live-dot"></span>
+        <span id="room-label">무량기원</span>
+        <span class="visitor-count" id="visitor-count">나 혼자</span>
+        <button type="button" id="panel-fold" class="panel-fold" aria-expanded="true" aria-label="행동 버튼 접기/펴기" title="행동 버튼 접기">▾</button>
+      </div>
+      <div class="visitor-name" id="visitor-name">방문객 · 고요한 학</div>
+      <div class="visitor-actions">
+        <button id="main-quick" class="action-button action-primary">♟ 바로 대국하기</button>
+        <button id="sit-button" class="action-button action-primary" hidden>바둑 두기 (E)</button>
+        <button id="board-button" class="action-button action-primary" hidden>바둑판 열기 (B)</button>
+        <button id="watch-button" class="action-button" hidden>관전하기 (F)</button>
+        <button id="greet-button" class="action-button">인사 (G)</button>
+        <button id="warm-button" class="action-button">반가움 (H)</button>
+        <button id="talk-button" class="action-button">한마디 (C)</button>
+        <button id="fp-button" class="action-button">1인칭 (V/F5)</button>
+      </div>
+      <button id="share-button" class="action-button friend-button">공유하기 · 무량기원 주소 보내기</button>
+      <div class="visitor-note" id="visitor-note">자유 채팅 없이, 정해진 인사와 한 판의 바둑으로 마음을 나눕니다.</div>
+    </section>
+
+    <section class="bottom-bar">
+      <div class="interaction-hint">좌클릭 이동 · 좌클릭 드래그 시선 · W A S D · Shift 달리기 · V/F5 1인칭 · E 입장·바둑 두기 · F 관전 · 2~7 장소 · / 단축키 전체 보기</div>
+      <div class="bottom-links"><span>手談 · 坐隱 · 無量 · v1</span></div>
+    </section>
+
+    <div class="joystick" id="joystick" aria-label="이동 조이스틱"><div class="joy-base"></div><div class="joy-knob" id="joy-knob"></div></div>
+    <button type="button" class="joy-run" id="joy-run" aria-label="달리기 켜기·끄기">달리기</button>
+    <div class="ctx-actions" id="ctx-actions" aria-label="상황별 행동"></div>
+    <button type="button" class="act-toggle" id="act-toggle" aria-label="행동 메뉴 열기"><b aria-hidden="true">♟</b><span>행동</span></button>
+    <button type="button" class="sound-toggle" id="mute-toggle" aria-label="소리 켜기/끄기">🔊</button>
+    <button type="button" class="sound-toggle fp-toggle" id="fp-toggle" aria-label="1인칭 시점" title="1인칭 시점 (V / F5)">1</button>
+    <button type="button" class="sound-toggle shot-toggle" id="shot-toggle" aria-label="스크린샷" title="스크린샷 (K)">📷</button>
+    <button type="button" class="sound-toggle ui-toggle" id="ui-toggle" aria-label="전체화면" title="전체화면">⛶</button>
+    <button type="button" class="sound-toggle ui-hide-btn" id="ui-hide" aria-label="UI 숨기기" title="UI 숨기기">UI</button>
+    <button type="button" id="ui-exit" aria-label="UI 다시 보기" title="UI 다시 보기 (Esc)" hidden>✕</button>
+    <button type="button" class="sound-toggle set-toggle" id="settings-toggle" aria-label="설정" title="설정 · 소리 크기">⚙</button>
+    <div class="settings-panel" id="settings-panel" hidden role="dialog" aria-label="설정">
+      <div class="sp-head"><h3>설정 · 소리 크기</h3><button type="button" id="settings-close" aria-label="닫기">✕</button></div>
+      <div class="sp-row sp-act"><span id="mouse-lbl">좌클릭 이동 · 우클릭 드래그 시선</span><button type="button" id="mouse-swap" class="outline-button">좌↔우 바꾸기</button></div>
+      <div class="sp-row sp-act"><span id="joy-lbl">이동: 화면 터치</span><button type="button" id="joy-swap" class="outline-button">조이스틱 전환</button></div>
+      <div class="sp-row sp-act"><span>내 옷 · 모자</span><button type="button" id="outfit-open" class="outline-button">👕 옷 바꾸기</button></div>
+      <label class="sp-row"><span>전체</span><input type="range" min="0" max="100" data-vol="master"><output></output></label>
+      <label class="sp-row"><span>바깥 소리(바람·새)</span><input type="range" min="0" max="100" data-vol="nature"><output></output></label>
+      <label class="sp-row"><span>실내 배경음</span><input type="range" min="0" max="100" data-vol="room"><output></output></label>
+      <label class="sp-row"><span>돌 놓는 소리</span><input type="range" min="0" max="100" data-vol="stone"><output></output></label>
+      <div class="sp-row sp-act"><span id="lowq-lbl">화질</span><button type="button" id="lowq-swap" class="outline-button">최적화 화질로 전환</button></div>
+      <div class="sp-row sp-act" id="sp-muryangsa" hidden><span>이웃 공간</span><a class="outline-button" id="muryangsa-link2" href="#" target="_blank" rel="noopener">무량사 가기 ↗</a></div>
+      <button type="button" class="sp-reset" id="vol-reset">기본값으로</button>
+    </div>
+    <button type="button" class="sound-toggle key-toggle" id="key-toggle" aria-label="단축키 안내" title="단축키 안내 ( / )">⌨</button>
+    <div class="key-help" id="key-help" hidden role="dialog" aria-label="단축키 안내">
+      <h3>단축키</h3>
+      <div class="kh-grid">
+      <h4>이동 · 시점</h4>
+      <div class="kh"><span>걷기 / 달리기</span><span class="kk"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> <kbd>Shift</kbd></span></div>
+      <div class="kh"><span>1인칭 / 3인칭</span><span class="kk"><kbd>V</kbd> <kbd>F5</kbd></span></div>
+      <div class="kh"><span>시선을 캐릭터 방향으로</span><span class="kk"><kbd>Z</kbd></span></div>
+      <div class="kh"><span>시간대 미리보기</span><span class="kk"><kbd>T</kbd></span></div>
+      <div class="kh"><span>소리 켜기 / 끄기</span><span class="kk"><kbd>M</kbd></span></div>
+      <h4>바둑</h4>
+      <div class="kh"><span>입장 · 퇴장 · 바둑 두기(앉기)</span><span class="kk"><kbd>E</kbd></span></div>
+      <div class="kh"><span>가까운 대국 관전</span><span class="kk"><kbd>F</kbd></span></div>
+      <div class="kh"><span>바둑판 다시 열기 (앉아 있을 때)</span><span class="kk"><kbd>B</kbd></span></div>
+      <div class="kh"><span>바둑판 닫기</span><span class="kk"><kbd>Esc</kbd></span></div>
+      <h4>행동</h4>
+      <div class="kh"><span>인사</span><span class="kk"><kbd>G</kbd></span></div>
+      <div class="kh"><span>반가움</span><span class="kk"><kbd>H</kbd></span></div>
+      <div class="kh"><span>한마디</span><span class="kk"><kbd>C</kbd></span></div>
+      <div class="kh"><span>스크린샷</span><span class="kk"><kbd>K</kbd></span></div>
+      <h4>안내 · 창</h4>
+      <div class="kh"><span>장소 이동 (정문·야외 대국석·로비·대국장·연구실·교육원)</span><span class="kk"><kbd>2</kbd>~<kbd>7</kbd></span></div>
+      <div class="kh"><span>이 공간 둘러보기</span><span class="kk"><kbd>Enter</kbd></span></div>
+      <div class="kh"><span>이 안내 열기 / 닫기</span><span class="kk"><kbd>/</kbd> <kbd>F1</kbd></span></div>
+      </div>
+      <div class="kh-foot">한글 입력 상태에서도 같은 위치의 키로 동작합니다 · 입력창에서는 꺼집니다</div>
+    </div>
+    <div class="ix-card" id="ix-card" hidden>
+      <div class="ix-title" id="ix-title"></div>
+      <div class="ix-row"><button type="button" data-ix="greet" data-ix-only class="outline-button">🙇 인사하기</button><button type="button" data-ix="invite" data-ix-only class="outline-button">♟ 한 판 청하기</button></div>
+      <div class="ix-say"><button type="button" data-ix="say" data-i="0" class="outline-button">안녕하세요</button><button type="button" data-ix="say" data-i="1" class="outline-button">한 수 부탁드립니다</button><button type="button" data-ix="say" data-i="2" class="outline-button">잘 두셨습니다</button><button type="button" data-ix="say" data-i="3" class="outline-button">고맙습니다</button><button type="button" data-ix="say" data-i="4" class="outline-button">한 판 더 어떠세요?</button><button type="button" data-ix="say" data-i="5" class="outline-button">수고하셨습니다</button></div>
+      <button type="button" data-ix="close" class="ix-close">닫기</button>
+    </div>
+    <div class="portal-card" id="portal-card" hidden><p id="portal-text"></p><div class="portal-actions"><button type="button" class="solid-button" id="portal-yes">입장</button><button type="button" class="outline-button" id="portal-no">취소</button></div></div>
+    <button type="button" class="top-chip" id="top-chip" aria-label="접속 인원과 내 이름 (눌러서 이름 바꾸기)">👥 1명</button>
+    <dialog id="outfit-dialog" class="ritual-dialog outfit-dialog">
+      <div class="dialog-kicker">OUTFIT</div>
+      <h2>옷 꾸미기</h2>
+      <div class="of-row"><span>옷 색</span><div class="of-sw" id="of-robe-sw"></div><input type="color" id="of-robe" aria-label="옷 색 직접 고르기"></div>
+      <div class="of-row"><span>허리띠</span><div class="of-sw" id="of-sash-sw"></div><input type="color" id="of-sash" aria-label="허리띠 색 직접 고르기"></div>
+      <div class="of-row"><span>머리</span><div class="of-hats"><button type="button" data-h="1">삿갓</button><button type="button" data-h="2">안경</button><button type="button" data-h="4">리본</button><button type="button" data-h="8">토끼귀</button><button type="button" data-h="16">고깔</button><button type="button" data-h="32">엔젤링</button><button type="button" data-h="64">화관</button><button type="button" data-h="128">고양이귀</button><button type="button" data-h="256">왕관</button><button type="button" data-h="512">이마 점 없음</button><button type="button" data-h="1024">헤드폰</button><button type="button" data-h="2048">에어팟</button></div></div>
+      <div class="of-row"><span>몸통</span><div class="of-hats"><button type="button" data-b="1">목도리</button><button type="button" data-b="2">염주</button><button type="button" data-b="4">가사</button><button type="button" data-b="8">망토</button><button type="button" data-b="16">보따리</button><button type="button" data-b="32">연꽃 장식</button><button type="button" data-b="64">스님 복장</button></div></div>
+      <div class="of-row"><span>눈</span><div class="of-hats"><button type="button" data-e="0">기본</button><button type="button" data-e="2">웃는 눈</button><button type="button" data-e="3">졸린 눈</button><button type="button" data-e="4">점 눈</button><button type="button" data-e="5">또렷한 눈</button><button type="button" data-e="6">감은 눈</button></div></div>
+      <div class="of-row"><span>코</span><div class="of-hats"><button type="button" data-n="0">기본</button><button type="button" data-n="1">점 코</button><button type="button" data-n="2">딸기코</button><button type="button" data-n="3">뾰족 코</button><button type="button" data-n="4">코 없음</button></div></div>
+      <div class="of-row" id="of-hatc-row" hidden><span>포인트 색</span><input type="color" id="of-hatc" aria-label="리본·목도리 색"></div>
+      <div class="of-row" id="of-kc-row" hidden><span>가사·망토 색</span><input type="color" id="of-kc" aria-label="가사·망토 색"></div>
+      <div class="dialog-actions"><button type="button" id="of-front" class="outline-button">앞모습 보기</button><button type="button" id="of-cancel" class="outline-button">취소</button><button type="button" id="of-save" class="solid-button">저장</button></div>
+    </dialog>
+    <dialog id="name-dialog" class="ritual-dialog">
+      <form method="dialog" id="name-form">
+        <div class="dialog-kicker">YOUR NAME</div>
+        <h2>이름 정하기</h2>
+        <label class="field-row"><span>기원에서 다른 방문객에게 보일 이름 (최대 12자)</span><input id="name-input" maxlength="12" autocomplete="off" aria-label="이름"></label>
+        <div class="dialog-actions"><button type="button" id="name-random" class="outline-button">무작위</button><button type="button" id="name-cancel" class="outline-button">취소</button><button type="submit" class="solid-button">저장</button></div>
+      </form>
+    </dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </main>
+  <noscript><p style="position:fixed;top:40%;width:100%;text-align:center">JavaScript를 켜 주세요.</p></noscript>
+  <script>(function(){var m=function(t){var l=document.getElementById("scene-loading"),e=document.getElementById("loading-msg");if(l)l.classList.add("error");if(e)e.textContent=t};
+if(location.protocol==="file:")m("파일을 직접 열면 3D 기원이 실행되지 않습니다. 서버(python -m http.server)나 GitHub Pages로 열어 주세요.");
+setTimeout(function(){if(!window.__muryangReady)m("3D 화면을 불러오지 못했습니다. 인터넷 연결을 확인하고 새로고침해 주세요.")},15000)})();</script>
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.166.1/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.166.1/examples/jsm/","trystero":"https://cdn.jsdelivr.net/npm/trystero@0.26.0/+esm"}}</script>
+  <script type="module" src="./src/main.js?v=1"></script>
+</body>
+</html>

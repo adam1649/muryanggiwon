@@ -1,0 +1,8 @@
+{
+  "name": "muryanggiwon",
+  "private": true,
+  "dependencies": {
+    "three": "^0.166.1",
+    "trystero": "^0.26.0"
+  }
+}
