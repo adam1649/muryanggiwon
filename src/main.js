@@ -378,19 +378,27 @@ const IM = { lobby: mat("#e7e1d6", .5), slat: mat("#b98f60", .6), slatD: mat("#6
   glassRun(-28, ZP, -19.5, ZP); glassRun(-14.5, ZP, -7.2, ZP); glassRun(7.2, ZP, 14.5, ZP); glassRun(19.5, ZP, 28, ZP);
   for (const sx of [-1, 1]) { glassRun(sx * 13, ZP, sx * 13, 12.8); glassRun(sx * 13, 16.4, sx * 13, 22); }
   const zsign = (txt, sub, x, z, ry, w = 4.2) => { const s = textSign([[txt, .5, "#2a2c2e", "700"], [sub, .26, "#8a7350", "600"]], w, .8, { bg: "rgba(244,242,236,.96)", res: 1024, metal: 0, rough: .8, ys: [.4, .8] }); s.position.set(x, 3.75, z); s.rotation.y = ry; g.add(s); return s; };
-  zsign("중앙 대국장", "中央對局場 · MAIN PLAYING HALL", 0, ZP + .08, 0, 5.2); zsign("중앙 대국장", "中央對局場 · MAIN PLAYING HALL", 0, ZP - .08, Math.PI, 5.2);
+  { // 중앙 대국장 입구: 로고 벽 양옆 두 개의 출입구 (나무 문틀 · 열린 유리문 · 현판 · 바닥 매트)
+    for (const sx of [-1, 1]) { const cx = sx * 5.6;
+      for (const px of [sx * 4.15, sx * 7.05]) box(g, px, 1.6, ZP, .26, 3.2, .42, M.woodDark);
+      box(g, cx, 3.25, ZP, 3.2, .3, .42, M.woodDark);
+      const dl = add(g, new THREE.BoxGeometry(1.3, 2.7, .04), M.frost, cx + sx * .95, 1.4, ZP - .9); dl.rotation.y = sx * 1.25; dl.castShadow = false; // 안쪽으로 활짝 열린 유리문
+      const dr = add(g, new THREE.BoxGeometry(1.3, 2.7, .04), M.frost, cx - sx * .95, 1.4, ZP - .9); dr.rotation.y = -sx * 1.25; dr.castShadow = false;
+      box(g, cx, .02, ZP + .9, 2.6, .03, 1.6, M.ink).castShadow = false;
+      zsign("중앙 대국장 입구", "中央對局場 · ENTRANCE", cx, ZP + .25, 0, 3.0); zsign("중앙 대국장", "中央對局場 · MAIN PLAYING HALL", cx, ZP - .25, Math.PI, 3.0);
+      inWall(sx * 4.3 - .15, sx * 4.3 + .15, ZP - .25, ZP + .25); }
+  }
   zsign("교육원", "敎育院 · ACADEMY", -20.5, ZP + .08, 0); zsign("연구 · 분석실", "硏究分析室 · RESEARCH", 20.5, ZP + .08, 0);
   zsign("교육원", "敎育院 · ACADEMY", -13.08, 14.6, -Math.PI / 2, 3.4); zsign("연구 · 분석실", "硏究分析室 · RESEARCH", 13.08, 14.6, Math.PI / 2, 3.4);
   // --- 안내 · 접견실 (로비) ---
   { const d = new THREE.Group(); d.position.set(0, 0, 11.6); g.add(d); // 안내 데스크
-    box(d, 0, .52, 0, 6.4, 1.04, 1.0, IM.desk); box(d, 0, 1.08, .05, 6.6, .08, 1.15, M.wood2); box(d, 0, .3, .52, 6.2, .1, .02, M.gold); box(d, 2.2, 1.25, -.1, .5, .36, .04, M.screen); inWall(-3.4, 3.4, 11, 12.2); }
-  { const w = new THREE.Group(); w.position.set(0, 0, 8.7); g.add(w); // 로고 벽: 짙은 목재 + 금빛 無量棋院
-    box(w, 0, 2.3, 0, 8, 4.6, .32, M.woodDark); const t = textSign([["無量棋院", .5, "#e0bd72"], ["MURYANG BADUK INSTITUTE", .14, "#c9b083", "600", .12], ["바둑의 깊이는 헤아릴 수 없다", .12, "#d9cfba", "600"]], 7, 2.6, { res: 1024, ys: [.36, .7, .88], glow: "#ffcf80", glowK: .35 }); t.position.set(0, 3.0, .17); w.add(t); inWall(-4, 4, 8.5, 8.9);
-    const t2 = textSign([["中央對局場 ↑", .5, "#e0bd72"]], 3.4, .6, { res: 512 }); t2.position.set(0, 3.2, -.17); t2.rotation.y = Math.PI; w.add(t2); }
+    box(d, 0, .41, 0, 6.4, .82, 1.0, IM.desk); box(d, 0, .86, .05, 6.6, .08, 1.15, M.wood2); box(d, 0, .26, .52, 6.2, .1, .02, M.gold); box(d, 1.6, 1.12, -.25, .62, .4, .04, M.screen); box(d, 1.6, .95, -.22, .08, .14, .08, M.metal); box(d, 1.6, .91, .05, .5, .02, .18, M.ink); inWall(-3.4, 3.4, 11, 12.2); }
+  { const w = new THREE.Group(); w.position.set(0, 0, ZP + .1); g.add(w); // 로고 벽: 짙은 목재 + 금빛 無量棋院
+    box(w, 0, 2.3, 0, 8, 4.6, .32, M.woodDark); const t = textSign([["無量棋院", .5, "#e0bd72"], ["MURYANG BADUK INSTITUTE", .14, "#c9b083", "600", .12], ["바둑의 깊이는 헤아릴 수 없다", .12, "#d9cfba", "600"]], 7, 2.6, { res: 1024, ys: [.36, .7, .88], glow: "#ffcf80", glowK: .35 }); t.position.set(0, 3.0, .17); w.add(t); inWall(-4, 4, ZP - .1, ZP + .3); }
   const sofa = (x, z, ry, n = 3) => { const s = new THREE.Group(); s.position.set(x, 0, z); s.rotation.y = ry; g.add(s); const L = n * .8; box(s, 0, .25, 0, L, .5, .9, M.sofa); box(s, 0, .62, -.38, L, .6, .2, M.sofa); for (const sx of [-1, 1]) box(s, sx * (L / 2 + .08), .4, 0, .16, .8, .9, M.sofa); const rw = Math.abs(Math.sin(ry)) > .5; inWall(x - (rw ? .5 : L / 2 + .2), x + (rw ? .5 : L / 2 + .2), z - (rw ? L / 2 + .2 : .5), z + (rw ? L / 2 + .2 : .5)); for (let i = 0; i < n; i++) regSeat(s, (i - (n - 1) / 2) * .8, 0, .12, ry, "sofa"); };
   for (const sx of [-1, 1]) { if (sx > 0) sofa(8.6, 19.6, Math.PI, 3); else sofa(-8.6, 14.9, 0, 3); /* 왼쪽(입구 쪽) 소파 자리에는 엘리베이터 */ sofa(sx * 11.4, 17, -sx * Math.PI / 2, 3); box(g, sx * 8.6, .22, 17.2, 2.4, .44, 1.2, M.wood2); inWall(sx * 8.6 - 1.2, sx * 8.6 + 1.2, 16.6, 17.8); cylinder(g, sx * 8.6, .5, 17.2, .14, .1, .16, M.white, 10); }
   const plantPot = (x, z, s = 1) => { cylinder(g, x, .4 * s, z, .34 * s, .26 * s, .8 * s, M.pot, 14); for (let i = 0; i < 5; i++) sphere(g, x + Math.cos(i * 1.3) * .2 * s, (1.1 + i * .15) * s, z + Math.sin(i * 1.3) * .2 * s, .38 * s, .3 * s, .38 * s, M.plant, 1); circles.push([RX(x), z, .4 * s]); };
-  for (const [x, z, s] of [[-12, 21, 1.3], [12, 21, 1.3], [-5, 9.4, 1], [5, 9.4, 1], [-12, 7.4, 1.1], [12, 7.4, 1.1]]) plantPot(x, z, s);
+  for (const [x, z, s] of [[-12, 21, 1.3], [12, 21, 1.3], [-3.3, 7.5, .9], [3.3, 7.5, .9], [-12, 7.4, 1.1], [12, 7.4, 1.1]]) plantPot(x, z, s);
   { const cab = new THREE.Group(); cab.position.set(-12.4, 0, 10.6); cab.rotation.y = Math.PI / 2; g.add(cab); box(cab, 0, .45, 0, 3, .9, .7, M.woodDark); const gb = add(cab, new THREE.BoxGeometry(3, 1.6, .66), M.frost, 0, 1.7, 0); gb.castShadow = false; for (let i = 0; i < 4; i++) { cylinder(cab, -1.1 + i * .73, 1.15, 0, .12, .06, .3, M.gold, 12); sphere(cab, -1.1 + i * .73, 1.42, 0, .16, .14, .16, M.gold, 2); } inWall(-12.8, -12, 9, 12.2);
     const tl = textSign([["역대 기전 우승컵", .5, "#2a2a28", "700"]], 2, .3, { bg: "#efe9dc", res: 512, metal: 0, rough: .8 }); tl.position.set(.0, 2.7, 0); tl.rotation.y = 0; cab.add(tl); }
   // (입구 안내판은 없앴다 — 안내 데스크의 안내원이 안내한다)
@@ -929,7 +937,7 @@ const views = {
   intro: { title: "무량기원", desc: "바둑의 깊이는 헤아릴 수 없다. 전문성과 전통이 함께하는 가상의 바둑 기관입니다. 대국장에서 인공지능이나 다른 방문객과 실제로 한 판 둘 수 있습니다.", pos: COARSE ? [-78, 52, 112] : [-46, 30, 70], target: [0, 7, -6] },
   front: { title: "정문 · 광장", desc: "밝은 석재와 유리, 짙은 금속으로 지은 무량기원 본관입니다. 넓은 계단을 오르면 캐노피 아래 정문이 있고, 왼쪽에는 기관명 입간판, 오른쪽에는 조형물 「흑백」이 있습니다.", pos: [24, 9, 40], target: [0, 8, 0], enter: [0, 20, Math.PI] },
   park: { title: "야외 대국석", desc: "느티나무 그늘 아래 돌 바둑판입니다. 공원에서 두던 그 바둑처럼, 누구나 앉아 한 판 둘 수 있습니다.", pos: [-21.5, 6.2, 1.5], target: [-29, .8, 19], enter: [-25.2, 17, -Math.PI / 2] },
-  lobby: { title: "안내 · 접견실", desc: "방문객 안내와 접수, 손님맞이를 하는 로비입니다. 안내 데스크 뒤 로고 벽을 돌아가면 중앙 대국장이 이어집니다.", pos: [IX + 9, 5.2, 21], target: [IX, 1.8, 9], enter: [IX, 16.2, Math.PI], inside: true },
+  lobby: { title: "안내 · 접견실", desc: "방문객 안내와 접수, 손님맞이를 하는 로비입니다. 안내원에게 말을 걸면 회원 등록과 시설 안내를 해 줍니다. 로고 벽 양옆 출입구로 들어가면 중앙 대국장입니다.", pos: [IX + 9, 5.2, 21], target: [IX, 1.8, 9], enter: [IX, 16.2, Math.PI], inside: true },
   hall: { title: "중앙 대국장", desc: "열두 개의 대국석이 놓인 무량기원의 핵심 공간입니다. 빈 자리에 앉아(E) 인공지능과 두거나, 맞은편에 다른 방문객이 앉기를 기다려 함께 둘 수 있습니다. 뒷벽 전광판에는 지금 진행 중인 대국이 중계됩니다.", pos: [IX + 14, 5.6, 5.5], target: [IX, 1, -8], enter: [IX, -3.4, Math.PI], inside: true },
   lab: { title: "연구 · 분석실", desc: "기보 분석과 복기, 바둑 연구를 하는 공간입니다. 전통 바둑판 앞 방석에 앉아 둘 수 있고, 벽면에는 기보 서가와 분석 화면이 있습니다.", pos: [IX + 14.2, 4.6, 8.4], target: [IX + 21, 1, 15], enter: [IX + 20.5, 9.2, 0], inside: true },
   tour: { title: "2층 대회실", desc: "무대 위 대회 대국석 두 곳의 대국이 뒷벽 대형 전광판과 1층 대국장 전광판에 실시간으로 중계됩니다. 관객석에 앉아(E) 관전할 수 있어요. 로비 왼편 엘리베이터로 올라옵니다.", pos: [IX2 + 13, 6.2, 5], target: [IX2, 1.2, -15], enter: [IX2, 2.2, Math.PI], inside: true },
@@ -1635,7 +1643,7 @@ const TOUR_T = [], ROOM_T = [];
   }
   // 대회실: 무대 · 대회 대국석 2 · 전광판 2 · 관객석
   const stage = box(g, 0, .15, -16.6, 28, .3, 10, mat("#3b2e26", .6)); stage.castShadow = false; box(g, 0, .305, -16.6, 26, .01, 8.6, mat("#7b2f2a", 1)).castShadow = false;
-  for (const [i, x] of [-6.5, 6.5].entries()) { const T = makeGoTable(up, x, -16.4, { kind: "chair", name: `대회실 제${i + 1} 대국석`, zone: "tour", y: .3 }); TOUR_T.push(T); box(T.g, .52, .87, .52, .26, .1, .14, M.ink); box(T.g, .52, .875, .59, .2, .06, .02, glow("#ff7a5a")); }
+  for (const [i, x] of [-6.5, 6.5].entries()) { const T = makeGoTable(up, x, -16.4, { kind: "chair", name: `대회실 제${i + 1} 대국석`, zone: "tour", y: .3, ry: Math.PI / 2 }); TOUR_T.push(T); box(T.g, .52, .87, .52, .26, .1, .14, M.ink); box(T.g, .52, .875, .59, .2, .06, .02, glow("#ff7a5a")); }
   for (const [i, x] of [-6.5, 6.5].entries()) { const tv = screenTex(), m = add(g, new THREE.PlaneGeometry(8.4, 5.25), new THREE.MeshBasicMaterial({ map: tv.t }), x, 3.4, -ID / 2 + .12); m.castShadow = false; box(g, x, 3.4, -ID / 2 + .05, 8.7, 5.5, .08, M.ink); SCREENS.push({ tv, m, tour: i }); }
   const bn = textSign([["제1회 무량배 바둑대회", .4, "#e0bd72", "700"], ["無量杯 · MURYANG CUP", .24, "#c9b083", "600"]], 7, 1.1, { bg: "#1b1f22", res: 1024, metal: .2, rough: .5, ys: [.42, .8], glow: "#ffcf80", glowK: .3 }); bn.position.set(0, 5.6, -ID / 2 + .1); g.add(bn);
   for (const z of [-8.4, -5.6, -2.8, 0]) for (const x0 of [-7.5, 7.5]) { const bg = new THREE.Group(); bg.position.set(x0, 0, z); bg.rotation.y = Math.PI; g.add(bg); box(bg, 0, .42, 0, 9, .08, .6, M.wood2); box(bg, 0, .75, -.32, 9, .6, .06, M.wood2); for (const k of [-4.2, 0, 4.2]) box(bg, k, .2, 0, .1, .4, .5, M.metal); for (let k = 0; k < 9; k++) regSeat(bg, -4 + k, 0, .08, Math.PI, "sofa"); inWall2(x0 - 4.6, x0 + 4.6, z - .4, z + .4); }
@@ -1693,7 +1701,7 @@ function makeNPC(name, role, outfit, x, z, ry, opts) {
   const av = makeAvatar(name); av.position.set(x, 0, z); av.rotation.y = ry; world.add(av); setOutfit(av, outfit); setTag(av, name, "staff");
   const n = { av, name, role, x, z, ry, ...opts, greeted: 0 }; av.userData.npc = n; NPCS.push(n); return n;
 }
-const NPC_DESK = makeNPC("안내원 한결", "무량기원 안내 데스크", { t: 0, r: "#2b3547", p: "#2b3547", k: "#c9a55f", hs: 3, hc: "#3b2a20", a: 64, e: 2, n: 0 }, IX, 10.7, 0, { near: [IX, 12.9], r: 3.4, kind: "desk" });
+const NPC_DESK = makeNPC("안내원 한결", "무량기원 안내 데스크", { t: 0, r: "#2b3547", p: "#2b3547", k: "#c9a55f", hs: 3, hc: "#3b2a20", a: 64, e: 2, n: 0 }, IX + 1.1, 9.9, 0, { near: [IX, 12.9], r: 3.4, kind: "desk" });
 const NPC_EDU = makeNPC("정 사범", "교육원 · 바둑 사범", { t: 2, r: "#6b5a43", p: "#3a3d42", k: "#c9a55f", hs: 1, hc: "#8f8a84", a: 1, e: 0, n: 0 }, IX - 25.4, 9.4, Math.PI / 2, { near: [IX - 24, 9.6], r: 3.4, kind: "edu" });
 const nearNPC = () => { const p = localAvatar.position; if (sitting) return null; for (const n of NPCS) if (Math.hypot(p.x - n.near[0], p.z - n.near[1]) < n.r) return n; return null; };
 const npcCard = document.createElement("section"); npcCard.className = "npc-card"; npcCard.hidden = true;
