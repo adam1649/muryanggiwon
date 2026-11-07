@@ -51,15 +51,17 @@ export class GoPanel {
         <div class="gp-opt"><span>상대</span><div class="gp-seg" data-k="opp"><button data-v="ai" class="on">인공지능</button><button data-v="pvp">방문객 기다리기</button></div></div>
         <div class="gp-opt gp-ai-only"><span>기력</span><div class="gp-seg" data-k="lv"><button data-v="0">입문</button><button data-v="1" class="on">초급</button><button data-v="2">중급</button><button data-v="3">고급</button></div></div>
         <div class="gp-opt"><span>판 크기</span><div class="gp-seg" data-k="size"><button data-v="9">9줄</button><button data-v="13">13줄</button><button data-v="19" class="on">19줄</button></div></div>
+        <div class="gp-opt"><span>대국 시간</span><div class="gp-seg" data-k="tc"><button data-v="0" class="on">무제한</button><button data-v="600">10분</button><button data-v="1200">20분</button><button data-v="1800">30분</button></div></div>
         <div class="gp-opt"><span>내 돌</span><div class="gp-seg" data-k="col"><button data-v="1" class="on">흑 (먼저)</button><button data-v="2">백</button><button data-v="0">무작위</button></div></div>
-        <p class="gp-note">한국 규칙 · 덤 6.5집 · 두 번 연속 패스하면 자동으로 계가합니다.</p>
+        <p class="gp-note gp-mode-note"></p>
+        <p class="gp-note">한국 규칙 · 덤 6.5집 · 시간을 정하면 기본 시간 뒤 초읽기 30초 3회 · 두 번 연속 패스하면 자동 계가.</p>
         <div class="gp-row"><button type="button" class="outline-button gp-leave">일어나기</button><button type="button" class="solid-button gp-start">대국 시작</button></div>
       </div>
       <div class="gp-game">
         <div class="gp-players">
-          <div class="gp-p" data-c="1"><i class="gp-stone b"></i><div><b class="gp-name">흑</b><small class="gp-cap">따낸 돌 0</small></div></div>
+          <div class="gp-p" data-c="1"><i class="gp-stone b"></i><div><b class="gp-name">흑</b><small class="gp-cap">따낸 돌 0</small><em class="gp-clock"></em></div></div>
           <div class="gp-vs">VS</div>
-          <div class="gp-p" data-c="2"><i class="gp-stone w"></i><div><b class="gp-name">백</b><small class="gp-cap">따낸 돌 0</small></div></div>
+          <div class="gp-p" data-c="2"><i class="gp-stone w"></i><div><b class="gp-name">백</b><small class="gp-cap">따낸 돌 0</small><em class="gp-clock"></em></div></div>
         </div>
         <div class="gp-wr" hidden><span class="gp-wr-b"></span><i><b></b></i><span class="gp-wr-w"></span></div>
         <div class="gp-board"><canvas aria-label="바둑판 (눌러서 착수)"></canvas></div>
@@ -74,7 +76,7 @@ export class GoPanel {
       </div>`;
     host.appendChild(el);
     this.cv = el.querySelector("canvas"); this.ctx = this.cv.getContext("2d");
-    this.opt = { opp: "ai", lv: 1, size: 19, col: 1 };
+    this.opt = { opp: "ai", lv: 1, size: 19, col: 1, tc: 0 };
     el.querySelectorAll(".gp-seg").forEach(seg => seg.addEventListener("click", e => {
       const b = e.target.closest("button"); if (!b) return; seg.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b));
       const k = seg.dataset.k, v = b.dataset.v; this.opt[k] = k === "opp" ? v : +v; el.querySelector(".gp-ai-only").hidden = this.opt.opp !== "ai";
@@ -105,7 +107,11 @@ export class GoPanel {
   open(title) { this.el.querySelector(".gp-title").textContent = title; this.el.hidden = false; this.draw(); }
   close() { this.el.hidden = true; this.pending = null; this.hover = null; }
   get isOpen() { return !this.el.hidden; }
-  setup(on, size) { this.el.querySelector(".gp-setup").hidden = !on; this.el.querySelector(".gp-game").hidden = on; if (on && size) { this.opt.size = size; this.el.querySelectorAll('[data-k="size"] button').forEach(b => b.classList.toggle("on", +b.dataset.v === size)); } if (!on) this.draw(); }
+  setup(on, size, mode) { // mode: "ai"(연습실 · 인공지능만) / "pvp"(방문객끼리만)
+    if (on && mode) { this.opt.opp = mode; const el = this.el; el.querySelector('[data-k="opp"]').closest(".gp-opt").hidden = true; el.querySelector(".gp-ai-only").hidden = mode !== "ai"; el.querySelector('[data-k="col"]').closest(".gp-opt").hidden = false;
+      el.querySelector(".gp-mode-note").textContent = mode === "ai" ? "연습실 · 인공지능과 두는 자리입니다. 연습 대국은 급수와 명예의 전당에 반영되지 않습니다." : "맞은편에 다른 방문객이 앉으면 시작합니다. 회원끼리의 대국은 급수와 주간 명예의 전당에 반영됩니다. 인공지능과 두려면 2층 연습실로 가세요."; }
+    this.el.querySelector(".gp-setup").hidden = !on; this.el.querySelector(".gp-game").hidden = on; if (on && size) { this.opt.size = size; this.el.querySelectorAll('[data-k="size"] button').forEach(b => b.classList.toggle("on", +b.dataset.v === size)); } if (!on) this.draw(); }
+  setClocks(t1, t2, warn) { const cs = this.el.querySelectorAll(".gp-clock"); cs[0].textContent = t1 || ""; cs[1].textContent = t2 || ""; cs[0].classList.toggle("warn", warn === 1); cs[1].classList.toggle("warn", warn === 2); }
   setWinrate(p) { const w = this.el.querySelector(".gp-wr"); if (p === null || p === undefined) { w.hidden = true; return; } w.hidden = false; const k = Math.round(p * 100); w.querySelector("b").style.width = k + "%"; w.querySelector(".gp-wr-b").textContent = "흑 " + k + "%"; w.querySelector(".gp-wr-w").textContent = (100 - k) + "% 백"; }
   setStatus(t) { this.el.querySelector(".gp-status").textContent = t; }
   canPlace(p) { const s = this.state; if (!s || s.status !== "play" || !this.me || this.board.turn !== this.me || s.thinking) return false; return this.board.legal(this.board.pos(p[0], p[1]), this.me); }

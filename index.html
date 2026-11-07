@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
-  <link rel="stylesheet" href="./style.css?v=2">
+  <link rel="stylesheet" href="./style.css?v=2.3">
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/icon32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="./assets/icon192.png">
   <link rel="apple-touch-icon" href="./assets/icon180.png">
@@ -26,12 +26,14 @@
   <main id="muryang-root">
     <div id="scene-loading" role="status" aria-live="polite">
       <div class="loading-inner">
+        <canvas id="ld-board" width="300" height="300" aria-hidden="true"></canvas>
         <span class="loading-hanja">無量棋院</span>
         <span class="loading-rule" aria-hidden="true"></span>
         <span class="loading-hangul">무량기원</span>
         <span class="loading-en">MURYANG BADUK INSTITUTE</span>
         <span class="loading-bar" aria-hidden="true"><i></i></span>
         <span class="loading-msg" id="loading-msg">무량기원 문을 여는 중입니다</span>
+        <span class="ld-proverb" id="ld-proverb"><b>위기십결 · 圍棋十訣</b><em></em><small></small></span>
       </div>
     </div>
     <div class="topbar">
@@ -97,6 +99,7 @@
         <button id="talk-button" class="action-button">한마디 (C)</button>
         <button id="live-button" class="action-button">📺 대국 중계 (J)</button>
         <button id="kibo-button" class="action-button">📜 내 기보 (I)</button>
+        <button id="hof-button" class="action-button">🏆 명예의 전당 (O)</button>
         <button id="fp-button" class="action-button">1인칭 (V/F5)</button>
       </div>
       <button id="share-button" class="action-button friend-button">공유하기 · 무량기원 주소 보내기</button>
@@ -149,6 +152,7 @@
       <div class="kh"><span>바둑판 닫기</span><span class="kk"><kbd>Esc</kbd></span></div>
       <div class="kh"><span>대국 중계 목록</span><span class="kk"><kbd>J</kbd></span></div>
       <div class="kh"><span>내 기보 보기</span><span class="kk"><kbd>I</kbd></span></div>
+      <div class="kh"><span>주간 명예의 전당</span><span class="kk"><kbd>O</kbd></span></div>
       <div class="kh"><span>바둑 배우기 (교육원)</span><span class="kk"><kbd>L</kbd></span></div>
       <h4>행동</h4>
       <div class="kh"><span>믹스커피 · 기보 서가 · 내려놓기</span><span class="kk"><kbd>Q</kbd></span></div>
@@ -198,10 +202,16 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
   </main>
   <noscript><p style="position:fixed;top:40%;width:100%;text-align:center">JavaScript를 켜 주세요.</p></noscript>
+  <script>(function(){var cv=document.getElementById("ld-board"),pv=document.getElementById("ld-proverb");if(!cv||!pv)return;var x=cv.getContext("2d"),N=9,S=300,P=22,g=(S-2*P)/(N-1),L=document.getElementById("scene-loading");
+var R=[["부득탐승","不得貪勝","이기려고 너무 욕심내지 마라"],["입계의완","入界宜緩","상대 세력에 들어갈 때는 천천히"],["공피고아","攻彼顧我","공격하기 전에 내 약점부터 살펴라"],["기자쟁선","棄子爭先","돌을 버리더라도 선수를 잡아라"],["사소취대","捨小就大","작은 것을 버리고 큰 것을 취하라"],["봉위수기","逢危須棄","위험하면 과감히 버려라"],["신물경속","愼勿輕速","가볍고 빠르게 두지 말고 신중하라"],["동수상응","動須相應","움직일 때는 서로 호응하게 하라"],["피강자보","彼强自保","상대가 강하면 나부터 지켜라"],["세고취화","勢孤取和","형세가 외로우면 화평을 취하라"]],ri=Math.floor(Math.random()*10);
+function prov(){var r=R[ri++%10];pv.classList.remove("on");setTimeout(function(){pv.querySelector("em").textContent=r[0]+" · "+r[1];pv.querySelector("small").textContent=r[2];pv.classList.add("on")},260)}prov();var pt=setInterval(prov,2600);
+var MV=[[2,2],[6,6],[6,2],[2,6],[4,4],[2,4],[6,4],[4,2],[4,6],[3,3],[5,5],[5,3],[3,5],[7,3],[1,5],[3,7],[5,1],[7,5],[1,3],[3,1],[5,7]],k=0,t0=performance.now();
+function draw(now){if(L.classList.contains("hide")){clearInterval(pt);return}var n=Math.floor((now-t0)/520)%(MV.length+4),fr=((now-t0)%520)/520;x.clearRect(0,0,S,S);var gr=x.createLinearGradient(0,0,S,S);gr.addColorStop(0,"#e3c287");gr.addColorStop(1,"#c99e5c");x.fillStyle=gr;x.beginPath();x.roundRect?x.roundRect(0,0,S,S,10):x.rect(0,0,S,S);x.fill();x.strokeStyle="rgba(60,38,16,.75)";x.lineWidth=1.2;for(var i=0;i<N;i++){x.beginPath();x.moveTo(P,P+i*g);x.lineTo(S-P,P+i*g);x.moveTo(P+i*g,P);x.lineTo(P+i*g,S-P);x.stroke()}x.fillStyle="rgba(60,38,16,.85)";[[2,2],[6,2],[2,6],[6,6],[4,4]].forEach(function(p){x.beginPath();x.arc(P+p[0]*g,P+p[1]*g,3,0,7);x.fill()});
+for(var j=0;j<Math.min(n,MV.length);j++){var m=MV[j],cx=P+m[0]*g,cy=P+m[1]*g,a=j===n-1?Math.min(1,fr*2.2):1,r=g*.46*(j===n-1?(1.25-.25*a):1);x.globalAlpha=a;x.beginPath();x.arc(cx+1.5,cy+2.5,r,0,7);x.fillStyle="rgba(0,0,0,.25)";x.fill();var sg=x.createRadialGradient(cx-r*.35,cy-r*.4,r*.1,cx,cy,r);if(j%2===0){sg.addColorStop(0,"#5a5a5a");sg.addColorStop(1,"#0d0d0d")}else{sg.addColorStop(0,"#ffffff");sg.addColorStop(1,"#cfcac0")}x.beginPath();x.arc(cx,cy,r,0,7);x.fillStyle=sg;x.fill();if(j===n-1&&a>=1){x.strokeStyle=j%2?"#c0392b":"#ffd27a";x.lineWidth=2;x.beginPath();x.arc(cx,cy,r*.45,0,7);x.stroke()}x.globalAlpha=1}requestAnimationFrame(draw)}requestAnimationFrame(draw)})();</script>
   <script>(function(){var m=function(t){var l=document.getElementById("scene-loading"),e=document.getElementById("loading-msg");if(l)l.classList.add("error");if(e)e.textContent=t};
 if(location.protocol==="file:")m("파일을 직접 열면 3D 기원이 실행되지 않습니다. 서버(python -m http.server)나 GitHub Pages로 열어 주세요.");
 setTimeout(function(){if(!window.__muryangReady)m("3D 화면을 불러오지 못했습니다. 인터넷 연결을 확인하고 새로고침해 주세요.")},15000)})();</script>
   <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.166.1/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.166.1/examples/jsm/","trystero":"https://cdn.jsdelivr.net/npm/trystero@0.26.0/+esm"}}</script>
-  <script type="module" src="./src/main.js?v=2"></script>
+  <script type="module" src="./src/main.js?v=2.3"></script>
 </body>
 </html>
